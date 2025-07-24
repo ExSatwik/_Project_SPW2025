@@ -1,11 +1,9 @@
 services:
   - type: web
     name: face-recognition-app
-    env: python
-    buildCommand: ./build.sh
-    startCommand: streamlit run main-app.py --server.port $PORT --server.address 0.0.0.0
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run main-app.py --server.port=10000 --server.headless=true
     envVars:
       - key: PYTHON_VERSION
-        value: 3.10
-    build:
-        pythonVersion: 3.10.12
+        value: 3.9

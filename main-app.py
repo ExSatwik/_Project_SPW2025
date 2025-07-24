@@ -8,6 +8,8 @@ import pandas as pd
 import shutil
 import time
 import scipy
+import pickle
+
 from scipy.spatial.distance import cosine, euclidean
 
 st.set_page_config(page_title="Face Recognition", layout="centered")
@@ -22,7 +24,7 @@ distance_metric = st.selectbox("Choose distance metric", ["cosine", "euclidean",
 
 # ---- Define the correct .pkl file to use ----
 model_key = model_name.lower().replace("-", "").replace(" ", "")
-embedding_file = f"embeddings/representations_{model_key}.pkl"
+embedding_file = f"./embeddings/representations_{model_key}.pkl"
 
 # ---- Thresholds ----
 thresholds = {
@@ -102,9 +104,12 @@ if query_img_path:
     with st.spinner("Searching for match..."):
         # Load embeddings
         try:
+            print("checkpt1")
             df = pd.read_pickle(embedding_file)
+            print(df)
         except Exception as e:
             st.error(f"❌ Failed to load embeddings: {e}")
+            print(df)
             st.stop()
 
         # Get query embedding
